@@ -1,0 +1,20 @@
+<p>
+  <%= render @post.categories %>
+</p>
+
+<%= render 'shared/content_title', title: "#{@post.title}" %>
+
+<p>
+  <%= @post.description %>
+</p>
+<hr/>
+
+
+<!-- this below is code created by me to just try things out -->
+
+<% @post.comments.each do |comment| %>
+  <div class="well">
+    <p><%= comment.body %></p>
+    <small>comment by <%= comment.user.username %></small>
+  </div>
+<% end %>
