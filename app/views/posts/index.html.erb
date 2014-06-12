@@ -1,21 +1,5 @@
 <%= render 'shared/content_title', title: "All Posts" %>
 
 <% @posts.each do |post| %>
-  <div class="row">
-    <div class="span8 well">
-      <%= render post.categories %>
-      <h4><%= link_to post.title, post_path(post) %></h4>
-      <p><%= post.description %></p>
-      <p>
-        <span class="quiet">posted by </span><%= post.user.username %>
-        <small>at <%= post.created_at %></small>
-      </p>
-      <small>
-        <span>
-          <%= link_to("#{post.comments.size} comments", post_path(post)) %>
-          <%= link_to("Edit", edit_post_path(post), class: "right") %>
-        </span>
-      </small>
-    </div>
-  </div>
+  <%= render 'post', post: post %> <!-- we need to pass in the local variable (unlike instance variables, which are by default read by views (HTML)) -->
 <% end %>

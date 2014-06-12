@@ -7,9 +7,13 @@ class CategoriesController < ApplicationController
     @category = Category.new(params.require(:category).permit(:name))
     if @category.save
       flash[:notice] = "#{@category.name} category was created!"
-      redirect_to :posts #or '/posts'
+      redirect_to root_path #which is :posts (or '/posts') in our case
     else
       render :new
     end
+  end
+
+  def show
+    @category = Category.find(params[:id])
   end
 end
