@@ -7,6 +7,10 @@
 <p>
   <%= @post.description %>
 </p>
+<br/>
+<small><%= link_to("Edit", edit_post_path(@post), class: 'right') %></small>
+<br/>
+
 <hr/>
 
 
@@ -15,6 +19,8 @@
 <% @post.comments.each do |comment| %>
   <div class="well">
     <p><%= comment.body %></p>
-    <small>comment by <%= comment.user.username %></small>
+    <small>
+      comment by <%= comment.user.username %>
+    </small>
   </div>
 <% end %>
