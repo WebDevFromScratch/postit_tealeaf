@@ -2,10 +2,14 @@
   <li>
     <%= link_to "Postit!", root_path, :class => 'brand' %>
   </li>
-  <li>
-    <%= link_to 'New Post', new_post_path %>
-  </li>
-  <li>
-    <%= link_to 'New Category', new_category_path %>
-  </li>
+  <div class='nav_item'>
+    <li>
+      <%= link_to 'New Post', new_post_path, class: 'btn  btn-success'%>
+    </li>
+  </div>
+  <div class='nav_item'>
+    <li>
+      <%= link_to 'New Category', new_category_path, class: 'btn  btn-info'%>
+    </li>
+  </div>
 </ul>

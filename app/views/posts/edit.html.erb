@@ -1,5 +1,7 @@
 <%= render 'shared/content_title', title: "Edit Your Post" %>
 
+<%= render 'shared/validation_error', object: @post %>
+
 <% if @post.errors.any? %>
   <ul class="alert alert-error alert_message">
   <% @post.errors.full_messages.each do |msg| %>
