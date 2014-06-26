@@ -1,0 +1,6 @@
+<% header = link_to('All Posts', root_path) + " &raquo; #{@category.name}".html_safe %>
+<%= render 'shared/content_title', title: header %> <!-- as a Rails convention, we need to specify this link is save if we want to pass HTML through that pieces of Ruby code; otherwise the links would not work -->
+
+<% @category.posts.each do |post| %>
+  <%= render 'posts/post', post: post %>
+<% end %>

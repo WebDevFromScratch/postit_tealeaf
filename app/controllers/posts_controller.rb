@@ -5,7 +5,9 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
-  def show; end
+  def show
+    @comment = Comment.new
+  end
 
   def new
     @post = Post.new
@@ -14,6 +16,8 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = User.first #hardcoded from the solution vid, TBD later, once we have authentication implemented
+
+    #binding.pry
 
     if @post.save
       flash[:notice] = "Your post was created!"
@@ -37,7 +41,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :url, :description, :user) #could change to .permit! if permitting all
+    params.require(:post).permit(:title, :url, :description, :user, :category_ids) #could change to .permit! if permitting all
   end
 
   def set_post
