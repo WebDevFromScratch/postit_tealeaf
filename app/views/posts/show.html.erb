@@ -18,9 +18,8 @@
 <% @post.comments.each do |comment| %>
   <div class="well">
     <p><%= comment.body %></p>
-    <small>
-      comment by <%= comment.user.username %>
-    </small>
+    <span class="quiet">comment by </span><%= comment.user.username %>
+    <small>at <%= pretty_date_time(comment) %></small>
   </div>
 <% end %>
 
