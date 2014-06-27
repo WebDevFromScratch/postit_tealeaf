@@ -41,7 +41,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :url, :description, :user, :category_ids) #could change to .permit! if permitting all
+    params.require(:post).permit(:title, :url, :description, :user, category_ids: []) #could change to .permit! if permitting all
   end
 
   def set_post
