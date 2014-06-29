@@ -27,6 +27,10 @@
       </li>
     </ul>
   </div>
+</ul>
+
+<ul class="nav pull-right">
+<% unless logged_in? %>
   <div class='nav_item'>
     <li>
       <%= link_to 'Register', register_path, class: 'btn btn-primary'%>
@@ -37,4 +41,18 @@
       <%= link_to 'Login', login_path, class: 'btn btn-info'%>
     </li>
   </div>
+<% else %>
+  <li>
+    <p class='navbar-text'>
+      Logged in as: <%= current_user.username %>&nbsp;&nbsp;&nbsp;&nbsp;
+    </p>
+  </li>
+  <li>
+    <div class='nav-item'>
+      <%= form_tag '/logout', method: 'delete' do %>
+        <%= submit_tag 'Logout', class: 'btn btn-info' %>
+      <% end %>        
+    </div>
+  </li>
+<% end %>
 </ul>
