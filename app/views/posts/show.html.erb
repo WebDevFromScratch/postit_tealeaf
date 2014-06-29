@@ -19,7 +19,7 @@
   <div class="well">
     <p><%= comment.body %></p>
     <span class="quiet">comment by </span><%= comment.user.username %>
-    <small>at <%= pretty_date_time(comment) %></small>
+    <small>at <%= pretty_date_time(comment.created_at) %></small>
   </div>
 <% end %>
 
