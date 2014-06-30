@@ -1,0 +1,35 @@
+<% username = @user.username %>
+
+<%= render 'shared/content_title', title: username %>
+
+<div class='well'>
+  <p><strong>Username:</strong> <%= username %><br/>
+  <strong>Timezone:</strong> TO DO</p>
+</div>
+
+<h5><%= username %>'s Activity:</h5>
+
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#tab1" data-toggle="tab">Posts</a>
+    </li>
+    <li>
+      <a href="#tab2" data-toggle="tab">Comments</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <% @posts.reverse.each do |post| %>
+        <%= render 'posts/post', post: post %>
+      <% end %>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <% @user.comments.each do |comment| %>
+        <%= render 'posts/comment', comment: comment, 
+          additional_stuff: "on: #{comment.post.title}" %>
+      <% end %>
+    </div>
+  </div>
+</div>

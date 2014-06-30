@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:show, :edit, :update]
   before_action :require_no_user, only: [:new, :create]
 
   def new
@@ -51,6 +51,10 @@ class UsersController < ApplicationController
   #this is not working as of yet! (no template for all users)
   def index
     @users = User.all
+  end
+
+  def show
+    @posts = @user.posts.all
   end
 
   private

@@ -20,11 +20,7 @@
 <h4>Comments:</h4>
 
 <% @post.comments.each do |comment| %>
-  <div class="well">
-    <p><%= comment.body %></p>
-    <span class="quiet">comment by </span><%= comment.user.username %>
-    <small>at <%= pretty_date_time(comment.created_at) %></small>
-  </div>
+  <%= render 'comment', comment: comment, additional_stuff: "" %>
 <% end %>
 
 <hr/>
