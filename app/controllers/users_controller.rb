@@ -30,14 +30,15 @@ class UsersController < ApplicationController
     # - first, confirm the original password
     # - then, set new password
 
-    if @user.save
+    if @user.update(user_params)
       unless params[:old_password] == ""
         if @user.authenticate(params[:old_password])
           @user.password = params[:user][:password]
           @user.save
         else
-          flash[:error] = 
-              "Your password remain unchanged (current password doesn't match)"
+          flash.now[:error] = 
+              "Current password doesn't match!"
+          render :edit and return
         end
       end
 

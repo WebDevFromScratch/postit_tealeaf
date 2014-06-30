@@ -2,6 +2,11 @@
 
 <%= render 'shared/validation_error', object: @user %>
 
+<div class="alert alert-info">
+  You can update your 'username' without the need to change the password.
+  <a class="close" data-dismiss="alert">&#215;</a>
+</div>
+
 <% unless logged_in? %>
   <%= render 'shared/logged_in_error', message: "You can't do that!" %>
 <% else %>
