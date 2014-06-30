@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_no_user
+  before_action :set_user, only: [:edit, :update]
+  before_action :require_no_user, only: [:new, :create]
 
   def new
     @user = User.new
@@ -11,10 +12,39 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session[:user_id] = @user.id #logging in on register
+
       flash[:notice] = "You have registered!"
       redirect_to root_path
     else
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @user.username = params[:user][:username]
+    #TODO: figure a way to elegantly change password, when:
+    # - first, confirm the original password
+    # - then, set new password
+
+    if @user.save
+      unless params[:old_password] == ""
+        if @user.authenticate(params[:old_password])
+          @user.password = params[:user][:password]
+          @user.save
+        else
+          flash[:error] = 
+              "Your password remain unchanged (current password doesn't match)"
+        end
+      end
+
+      flash[:notice] = "Your profile was updated!"
+      redirect_to root_path #change later to 'user_path' (when I create that)
+    else
+      render :edit
     end
   end
 
@@ -27,5 +57,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit!
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

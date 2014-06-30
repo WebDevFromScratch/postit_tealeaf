@@ -8,6 +8,11 @@
         <%= link_to 'New Post', new_post_path, class: 'btn btn-success'%>
       </li>
     </div>
+    <div class='nav_item'>
+      <li>
+        <%= link_to 'Edit Profile', edit_user_path(current_user), class: 'btn btn-success'%>
+      </li>
+    </div>
   <% end %>
   <div class='btn-group nav_item'>
     <%= link_to '#', class: 'btn dropdown-toggle', 'data-toggle' => 'dropdown' do %>
