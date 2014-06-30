@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_no_user
+
   def new
     @user = User.new
   end
@@ -16,6 +18,7 @@ class UsersController < ApplicationController
     end
   end
 
+  #this is not working as of yet! (no template for all users)
   def index
     @users = User.all
   end
