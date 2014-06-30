@@ -1,6 +1,6 @@
 <% username = @user.username %>
 
-<%= render 'shared/content_title', title: username %>
+<%= render 'shared/content_title', title: "#{username}'s Profile" %>
 
 <div class='well'>
   <p><strong>Username:</strong> <%= username %><br/>
@@ -28,7 +28,7 @@
     <div class="tab-pane" id="tab2">
       <% @user.comments.each do |comment| %>
         <%= render 'posts/comment', comment: comment, 
-          additional_stuff: "on: #{comment.post.title}" %>
+          additional_stuff: link_to(comment.post.title, post_path(comment.post)) %>
       <% end %>
     </div>
   </div>
