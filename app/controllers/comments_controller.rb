@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = Comment.new(params.require(:comment).permit(:body))
-    @comment.user = User.first
+    @comment.user = current_user
     @comment.post_id = params[:post_id]
 
     if @comment.save

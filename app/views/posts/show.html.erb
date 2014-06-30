@@ -8,12 +8,16 @@
   <%= @post.description %>
 </p>
 <br/>
-<small><%= link_to("Edit", edit_post_path(@post), class: 'right') %></small>
+<% if logged_in? && @post.user == current_user %>
+  <small><%= link_to("Edit", edit_post_path(@post), class: 'right') %></small>
+<% end %>
 <br/>
 
 <hr/>
 
 <!-- this below is code created by me to just try things out -->
+
+<h4>Comments:</h4>
 
 <% @post.comments.each do |comment| %>
   <div class="well">
@@ -23,12 +27,18 @@
   </div>
 <% end %>
 
+<hr/>
+
 <!-- comments create form -->
 
 <%= render 'shared/validation_error', object: @comment %>
 
-<%= form_for [@post, @comment] do |f| %>
-  <%= f.text_area :body %>
-  <br/>
-  <%= f.submit "Add Comment", class: "btn btn-primary" %>
+<% if logged_in? %>
+  <%= form_for [@post, @comment] do |f| %>
+    <%= f.text_area :body %>
+    <br/>
+    <%= f.submit "Add Comment", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <h4 class="text-center">You must be logged in to comment</h4>
 <% end %>

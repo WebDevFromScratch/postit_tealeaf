@@ -1,5 +1,5 @@
 <%= render 'shared/content_title', title: "All Posts" %>
 
-<% @posts.each do |post| %>
+<% @posts.reverse.each do |post| %>
   <%= render 'post', post: post %> <!-- we need to pass in the local variable (unlike instance variables, which are by default read by views (HTML)) -->
 <% end %>
