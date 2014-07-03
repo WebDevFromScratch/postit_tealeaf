@@ -13,24 +13,23 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 8 }, on: :create
 
-  validate :old_password_must_match
+  validate :current_password_errors
   validates :password, presence: true, length: { minimum: 8 }, on: :update,
-            if: :password_match? #,allow_blank: true #- not sure this should even be here
+            if: :current_password_match? #,allow_blank: true #- not sure this should even be here
 
-
-  def old_password_must_match
-    current_password = BCrypt::Password.new(User.find(self.id).password_digest)
-
-    if self.old_password.blank? && !self.password.blank?
-      errors.add(:base, "You must enter your current password to set a new one")
-    elsif current_password != self.old_password
-      errors.add(:base, "Old password doesn't match") unless self.old_password.blank?
-    end
+  def current_password
+    BCrypt::Password.new(User.find(self.id).password_digest)
   end
 
-  def password_match?
-    current_password = BCrypt::Password.new(User.find(self.id).password_digest)
+  def current_password_match?
+    current_password == self.old_password unless self.old_password.blank?
+  end
 
-    (current_password == self.old_password) unless self.old_password.blank?
+  def current_password_errors
+    if self.old_password.blank? && !self.password.blank?
+      errors.add(:base, "You must enter your current password to set a new one")
+    elsif !current_password_match? #current_password != self.old_password
+      errors.add(:base, "Old password doesn't match") unless self.old_password.blank?
+    end
   end
 end
