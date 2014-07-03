@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :require_no_user, only: [:new, :create]
+  before_action :require_user, only: [:show, :edit, :create]
 
   def new
     @user = User.new
@@ -8,7 +9,6 @@ class UsersController < ApplicationController
 
 
   def create
-    #binding.pry
     @user = User.new(user_params)
 
     if @user.save
@@ -26,28 +26,27 @@ class UsersController < ApplicationController
 
   def update
     @user.username = params[:user][:username]
-    #TODO: figure a way to elegantly change password, when:
-    # - first, confirm the original password
-    # - then, set new password
+    @user.old_password = params[:old_password]
 
-    if @user.update(user_params)
-      unless params[:old_password] == ""
-        if @user.authenticate(params[:old_password])
-          @user.password = params[:user][:password]
-          @user.save
-        else
-          flash.now[:error] = 
-              "Current password doesn't match!"
-          render :edit and return
-        end
-      end
-
-      flash[:notice] = "Your profile was updated!"
-      redirect_to root_path #change later to 'user_path' (when I create that)
+    if @user.update(user_params) 
+      flash[:notice] = "Your profile was successfully updated."
+      redirect_to user_path(@user)
     else
-      render :edit
+      render 'edit'
     end
-  end
+  end 
+
+  #  record = User.find(params[:id])
+  #  value = params[:user][:password]
+
+  #  binding.pry
+
+  #  if @user.update(user_params) #don't know why I had '.save' here earlier    
+  #    flash[:notice] = "Your profile was updated!"
+  #    redirect_to user_path(@user.id)
+  #  else
+  #    render :edit
+  #  end
 
   #this is not working as of yet! (no template for all users)
   def index
@@ -62,6 +61,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit!
+  end
+
+  def user_params_with_new_password
+    params.require(:user, :new_password).permit!
   end
 
   def set_user

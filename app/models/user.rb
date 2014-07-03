@@ -1,4 +1,10 @@
+require 'bcrypt'
+
 class User < ActiveRecord::Base
+  include BCrypt
+
+  attr_accessor :old_password
+
   has_many :posts
   has_many :comments
 
@@ -7,13 +13,24 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 8 }, on: :create
 
-  #validate :password_validation_with_old_password, on: :update
+  validate :old_password_must_match
+  validates :password, presence: true, length: { minimum: 8 }, on: :update,
+            if: :password_match? #,allow_blank: true #- not sure this should even be here
 
-  private
 
-  #def password_validation_with_old_password
-  #  if @user.authenticate("ramm")
-  #    validates :password, presence: true, length: { minimum: 8 }
-  #  end
-  #end
+  def old_password_must_match
+    current_password = BCrypt::Password.new(User.find(self.id).password_digest)
+
+    if self.old_password.blank? && !self.password.blank?
+      errors.add(:base, "You must enter your current password to set a new one")
+    elsif current_password != self.old_password
+      errors.add(:base, "Old password doesn't match") unless self.old_password.blank?
+    end
+  end
+
+  def password_match?
+    current_password = BCrypt::Password.new(User.find(self.id).password_digest)
+
+    (current_password == self.old_password) unless self.old_password.blank?
+  end
 end
