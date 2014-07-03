@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   validate :current_password_errors
   validates :password, presence: true, length: { minimum: 8 }, on: :update,
-            if: :current_password_match? #,allow_blank: true #- not sure this should even be here
+            if: :current_password_match?
 
   def current_password
     BCrypt::Password.new(User.find(self.id).password_digest)
