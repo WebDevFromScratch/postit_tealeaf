@@ -7,24 +7,21 @@
   <a class="close" data-dismiss="alert">&#215;</a>
 </div>
 
-<% unless logged_in? %>
-  <%= render 'shared/logged_in_error', message: "You can't do that!" %>
-<% else %>
-  <div class="well">
-    <%= form_for @user do |f| %>
-      <div class='control-group'>
-        <%= f.label :username %>
-        <%= f.text_field :username %>
-      </div>
-      <div class='control-group'>
-        <%= label_tag :old_password %>
-        <%= password_field_tag :old_password %>
-      </div>    
-      <div class='control-group'>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </div>
-      <%= f.submit 'Update', class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-<% end %>
+
+<div class="well">
+  <%= form_for @user do |f| %>
+    <div class='control-group'>
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+    </div>
+    <div class='control-group'>
+      <%= label_tag :old_password %>
+      <%= password_field_tag :old_password %>
+    </div>    
+    <div class='control-group'>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+</div>

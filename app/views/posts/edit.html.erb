@@ -2,12 +2,8 @@
 
 <%= render 'shared/validation_error', object: @post %>
 
-<% if logged_in? %>
-  <% if @post.user == current_user %>
-    <%= render 'form', action_description: "Edit Post" %>
-  <% else %>
-    <%= render 'shared/logged_in_error', message: "You can only edit your own posts!" %>
-  <% end %>
+<% if @post.user == current_user %>
+  <%= render 'form', action_description: "Edit Post" %>
 <% else %>
-  <%= render 'shared/logged_in_error', message: "You must be logged in to do that!" %>
+  <%= render 'shared/logged_in_error', message: "You can only edit your own posts!" %>
 <% end %>

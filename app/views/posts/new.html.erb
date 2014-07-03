@@ -2,8 +2,4 @@
 
 <%= render 'shared/validation_error', object: @post %>
 
-<% if logged_in? %>
-  <%= render 'form', action_description: "Create Post" %>
-<% else %>
-  <%= render 'shared/logged_in_error', message: "You must be logged in to do that!" %>
-<% end %>
+<%= render 'form', action_description: "Create Post" %>

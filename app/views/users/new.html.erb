@@ -2,20 +2,16 @@
 
 <%= render 'shared/validation_error', object: @user %>
 
-<% if logged_in? %>
-  <%= render 'shared/logged_in_error', message: "You must be logged out to register" %>
-<% else %>
-  <div class="well">
-    <%= form_for @user do |f| %>
-      <div class='control-group'>
-        <%= f.label :username %>
-        <%= f.text_field :username %>
-      </div>    
-      <div class='control-group'>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </div>
-      <%= f.submit 'Register', class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-<% end %>
+<div class="well">
+  <%= form_for @user do |f| %>
+    <div class='control-group'>
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+    </div>    
+    <div class='control-group'>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <%= f.submit 'Register', class: 'btn btn-primary' %>
+  <% end %>
+</div>

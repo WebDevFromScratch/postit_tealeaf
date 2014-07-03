@@ -2,16 +2,12 @@
 
 <%= render 'shared/validation_error', object: @category %>
 
-<% if logged_in? %>
-  <div class="well">
-    <%= form_for @category do |f| %>
-      <div class='control-group'>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-      </div>
-      <%= f.submit "Create Category", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-<% else %>
-  <%= render 'shared/logged_in_error', message: "You must be logged in to do that!" %>
-<% end %>
+<div class="well">
+  <%= form_for @category do |f| %>
+    <div class='control-group'>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <%= f.submit "Create Category", class: "btn btn-primary" %>
+  <% end %>
+</div>

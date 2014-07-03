@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :require_no_user, only: [:new, :create]
-  before_action :require_user, only: [:show, :edit, :create]
+  before_action :require_user, only: [:edit]
 
   def new
     @user = User.new
@@ -26,7 +26,9 @@ class UsersController < ApplicationController
 
   def update
     @user.username = params[:user][:username]
-    @user.old_password = params[:old_password]
+    @user.old_password = params[:old_password] #storing old password, which is
+                                               #needed to create a new one
+                                               #(custom feature)
 
     if @user.update(user_params) 
       flash[:notice] = "Your profile was successfully updated."
@@ -34,19 +36,7 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
-  end 
-
-  #  record = User.find(params[:id])
-  #  value = params[:user][:password]
-
-  #  binding.pry
-
-  #  if @user.update(user_params) #don't know why I had '.save' here earlier    
-  #    flash[:notice] = "Your profile was updated!"
-  #    redirect_to user_path(@user.id)
-  #  else
-  #    render :edit
-  #  end
+  end
 
   #this is not working as of yet! (no template for all users)
   def index
