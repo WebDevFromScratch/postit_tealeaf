@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :require_same_user, only: [:edit, :update] #this prevents from
+    #editing another user's profile when logged in as different user
+
   before_action :require_no_user, only: [:new, :create]
   before_action :require_user, only: [:edit]
 
@@ -44,7 +47,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @posts = @user.posts.all
+
   end
 
   private
@@ -59,5 +62,12 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def require_same_user
+    if current_user != @user
+      flash[:error] = "You're not allowed to do that"
+      redirect_to root_path
+    end
   end
 end

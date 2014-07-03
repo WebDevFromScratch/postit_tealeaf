@@ -11,25 +11,21 @@
 
 <div class="tabbable">
   <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#tab1" data-toggle="tab">Posts (<%= @user.posts.count %>)</a>
+    <li class="<%= 'active' if params[:tab].nil? %>">
+      <%= link_to "Posts (#{@user.posts.size})", user_path(@user) %>      
     </li>
-    <li>
-      <a href="#tab2" data-toggle="tab">Comments (<%= @user.comments.count %>)</a>
+    <li class="<%= 'active' if params[:tab] == 'comments' %>">
+      <%= link_to "Comments (#{@user.comments.size})", user_path(@user, tab: 'comments') %><!-- this tab: 'comments' is there so it's shown in params (will be used later) -->      
     </li>
   </ul>
 
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-      <% @posts.reverse.each do |post| %>
-        <%= render 'posts/post', post: post %>
-      <% end %>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <% @user.comments.each do |comment| %>
-        <%= render 'posts/comment', comment: comment, 
-          additional_stuff: link_to(comment.post.title, post_path(comment.post)) %>
-      <% end %>
-    </div>
-  </div>
-</div>
+  <% if params[:tab].nil? %>
+    <% @user.posts.reverse.each do |post| %>
+      <%= render 'posts/post', post: post %>
+    <% end %>
+  <% elsif params[:tab] == 'comments' %>
+    <% @user.comments.reverse.each do |comment| %>
+      <%= render 'posts/comment', comment: comment, show_comment_post: true %>
+    <% end %>
+  <% end %>
+
