@@ -14,4 +14,18 @@ class CommentsController < ApplicationController
       render "posts/show"
     end
   end
+
+  def vote
+    @vote = Vote.new(vote: params[:vote])
+    @vote.user = current_user
+    @vote.voteable = Comment.find(params[:id])
+
+    if @vote.save
+      flash[:notice] = "Your vote was counted"
+      redirect_to :back
+    else
+      flash[:error] = "You can only vote on that once"
+      render :index
+    end
+  end
 end

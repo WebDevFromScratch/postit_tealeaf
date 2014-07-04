@@ -1,13 +1,35 @@
 <% show_comment_post ||= false %> <!-- this sets this var as a default to false (if no value is passed to it) -->
 
-<div class="well">
-  <p>
-    <%= comment.body %> <span class="quiet">
-    <% if show_comment_post %>
-      on</span> <%= link_to comment.post.title, post_path(comment.post) %>
+<div class="row">
+  <div class="well span0 text-center">
+    <% if logged_in? %>
+      <%= link_to vote_post_comment_path(@post, comment, vote: true), method: 'post' do %>
+        <i class="icon-circle-arrow-up"></i>
+      <% end %>
+      <br/>
     <% end %>
-  </p>
-  <br/>
-  <span class="quiet">comment by </span><%= link_to comment.user.username, user_path(comment.user.id) %>
-  <small>at <%= pretty_date_time(comment.created_at) %></small>
+    <%= comment.total_votes %>
+    <% if comment.total_votes == 1 || comment.total_votes == -1 %>
+      vote
+    <% else %>
+      votes
+    <% end %>
+    <% if logged_in? %>
+      <br/>
+      <%= link_to vote_post_comment_path(@post, comment, vote: false), method: 'post' do %>
+        <i class="icon-circle-arrow-down"></i>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="well span8">
+    <p>
+      <%= comment.body %> <span class="quiet">
+      <% if show_comment_post %>
+        on</span> <%= link_to comment.post.title, post_path(comment.post) %>
+      <% end %>
+    </p>
+    <br/>
+    <span class="quiet">comment by </span><%= link_to comment.user.username, user_path(comment.user.id) %>
+    <small>at <%= pretty_date_time(comment.created_at) %></small>
+  </div>
 </div>

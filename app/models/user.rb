@@ -1,4 +1,4 @@
-require 'bcrypt'
+require 'bcrypt' #try to remove these bcrypt things later and see if it works
 
 class User < ActiveRecord::Base
   include BCrypt
@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :comments
+  has_many :votes
 
   has_secure_password validations: false
 

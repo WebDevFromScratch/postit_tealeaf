@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update]
+  before_action :set_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, except: [:index, :show]
 
   def index
@@ -35,6 +35,22 @@ class PostsController < ApplicationController
     else
       render :edit #or 'edit'
     end
+  end
+
+  def vote
+    @vote = Vote.create(voteable: @post, user: current_user, vote: params[:vote])
+    #@vote.user = current_user
+    #@vote.voteable = @post
+
+    if !@vote.errors.any?
+      flash[:notice] = "Your vote was counted"
+    else
+      flash[:error] = "You can only vote on that once"
+    end
+
+    redirect_to :back
+
+    #!!!note that there's a different flow here; study this in a spare while
   end
 
   private
