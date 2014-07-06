@@ -3,7 +3,7 @@
 <div class="row">
   <div class="well span0 text-center">
     <% if logged_in? %>
-      <%= link_to vote_post_comment_path(@post, comment, vote: true), method: 'post' do %>
+      <%= link_to vote_post_comment_path(@post, comment, vote: true), method: 'post' do %><!-- @post can be written as comment.post (association) -->
         <i class="icon-circle-arrow-up"></i>
       <% end %>
       <br/>
