@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_password_confirmation, only: [:update]
   before_action :require_same_user, only: [:edit, :update] #this prevents from
     #editing another user's profile when logged in as different user
 
@@ -13,6 +14,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.password = params[:user][:password]
+    @user.confirm_password = params[:confirm_password]
 
     if @user.save
       session[:user_id] = @user.id #logging in on register
@@ -62,6 +65,11 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def set_password_confirmation
+    @user.password = params[:user][:password]
+    @user.confirm_password = params[:confirm_password]
   end
 
   def require_same_user

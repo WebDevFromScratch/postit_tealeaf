@@ -1,0 +1,54 @@
+1. What's the difference between rendering and redirecting? What's the impact with regards to instance variables, view templates?
+
+    Rendering is just showing/refreshing a template. It's not issuing a new HTTP request, so our instance variables are still available to us.
+
+    Re-directing is essentially issuing a new HTTP request and as HTTP is a stateless protocol, we lose all our data like instance variables, for example.
+
+2. If I need to display a message on the view template, and I'm redirecting, what's the easiest way to accomplish this?
+
+    Using 'flash[]'.
+
+3. If I need to display a message on the view template, and I'm rendering, what's the easiest way to accomplish this?
+    
+    With validations. We can also use 'flash.now[]'.
+
+4. Explain how we should save passwords to the database.
+
+    We should use a 'bcrypt' gem, which saves our password as one-way hash digest. This way we avoid storing raw passwords in our database and thus avoid a serious security flaw.
+
+5. What should we do if we have a method that is used in both controllers and views?
+
+    We should extract this method to a helper method, which we store in a controller (if the method should be available throughout the whole app, this would be ApplicationController)
+
+6. What is memoization? How is it a performance optimization?
+
+    Memoization is a technique which improves the performance of our app, by only hitting the database once on each view when we want to access an instance variable many times. It's performed using '||=' operator.
+
+7. If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?
+
+    We can use 'before_action' in our controller, where we could pass a method which checks if there is a logged user.
+
+8. Suppose we have the following table for tracking "likes" in our application. How can we make this table polymorphic? Note that the "user_id" foreign key is tracking who created the like.
+id  user_id   photo_id  video_id  post_id
+1   4     12  
+2   7       3
+3   2   6     
+
+    We can create a polymorphic association using this syntax:
+
+    #like.rb
+    belongs_to :likeable, polymorphic: true
+
+    #photo.rb, video.rb, post.rb
+    has_many :likes, as: :likeable
+
+    We'd also need to create appropriate columns in our 'likes' table in database, through migration (adding likeable_type and likeable_id columns)
+
+
+9. How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).
+    
+    Just like the one above.
+
+10. What is an ERD diagram, and why do we need it?
+
+    ERD stands for Entity Relationship Diagram. It shows all the relations between models in our app. We need it to know what association we should create in order for our app to work as we'd like.
