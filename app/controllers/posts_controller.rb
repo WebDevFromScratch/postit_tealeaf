@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :vote]
+  before_action :set_post, only: [:show, :edit, :update, :vote, :vote_change]
   before_action :require_user, except: [:index, :show]
 
   def index
@@ -57,6 +57,31 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote_change
+    @posts = Post.all
+    @vote = @post.votes.find_by user_id: current_user.id
+    @vote.old_vote = @vote[:vote]
+    @vote.new_vote = params[:vote]
+
+    if @vote.valid?
+      @vote.update(vote: params[:vote])
+      flash[:notice] = "Your vote was changed"
+      redirect_to :back
+    else
+      flash[:error] = "You only have one vote (up or down)"
+      redirect_to :back
+    end
+
+    #if @vote[:vote] == to_boolean(params[:vote])
+    #  flash[:error] = "You only have one vote (up or down)"
+    #  redirect_to :back
+    #else
+    #  @vote.update(vote: params[:vote])
+    #  flash[:notice] = "Your vote was changed"
+    #  redirect_to :back
+    #end
+  end
+
   private
 
   def post_params
@@ -65,5 +90,9 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def to_boolean(str)
+    str == "true"
   end
 end

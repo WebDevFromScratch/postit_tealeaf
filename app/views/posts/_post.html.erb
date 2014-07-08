@@ -1,8 +1,14 @@
 <div class="row">
   <div class="span2 well text-center">
     <% if logged_in? %>
-      <%= link_to vote_post_path(post, vote: true), method: 'post', remote: true do %>
-        <i class="icon-circle-arrow-up"></i>
+      <% if user_voted?(post) %>
+        <%= link_to vote_change_post_path(post, vote: true), method: 'patch' do %>
+          <i class="icon-heart"></i>
+        <% end %>        
+      <% else %>
+        <%= link_to vote_post_path(post, vote: true), method: 'post', remote: true do %>
+          <i class="icon-circle-arrow-up"></i>
+        <% end %>
       <% end %>
       <br/>
     <% end %>
@@ -14,8 +20,14 @@
     <% end %>
     <% if logged_in? %>
       <br/>
-      <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %>
-        <i class="icon-circle-arrow-down"></i>
+      <% if user_voted?(post) %>
+        <%= link_to vote_change_post_path(post, vote: false), method: 'patch' do %>
+          <i class="icon-heart"></i>
+        <% end %>
+      <% else %>
+        <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %>
+          <i class="icon-circle-arrow-down"></i>
+        <% end %>
       <% end %>
     <% end %>
     <br/>

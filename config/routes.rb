@@ -10,12 +10,13 @@ PostitTemplate::Application.routes.draw do
   resources :posts, except: [:destroy] do 
     resources :comments, only: [:create] do
       member do
-        post 'vote'
+        post 'vote'        
       end
     end
 
     member do
       post 'vote'
+      patch 'vote_change'
     end
   end
 
