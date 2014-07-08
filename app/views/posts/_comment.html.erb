@@ -1,14 +1,14 @@
 <% show_comment_post ||= false %> <!-- this sets this var as a default to false (if no value is passed to it) -->
 
 <div class="row">
-  <div class="well span0 text-center">
+  <div class="well span2 text-center">
     <% if logged_in? %>
-      <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: 'post' do %>
+      <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: 'post', remote: true do %>
         <i class="icon-circle-arrow-up"></i>
       <% end %>
       <br/>
     <% end %>
-    <%= comment.total_votes %>
+    <span id="comment_<%= comment.id %>_votes"><%= comment.total_votes %></span>
     <% if comment.total_votes == 1 || comment.total_votes == -1 %>
       vote
     <% else %>
@@ -16,10 +16,13 @@
     <% end %>
     <% if logged_in? %>
       <br/>
-      <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: 'post' do %>
+      <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: 'post', remote: true do %>
         <i class="icon-circle-arrow-down"></i>
       <% end %>
     <% end %>
+    <br/>
+    <br/>
+    <span id="comment_<%= comment.id %>_msg"></span>
   </div>
   <div class="well span8">
     <p>

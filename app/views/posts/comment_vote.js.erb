@@ -1,0 +1,6 @@
+<% if @vote.valid? %>
+  $('#comment_<%= @comment.id %>_votes').html('<%= @comment.total_votes %>');
+  $('#comment_<%= @comment.id %>_msg').addClass("alert alert-success").html("<small>Vote Counted!</small>");
+<% else %>
+  $('#comment_<%= @comment.id %>_msg').addClass("alert alert-error").html("<small>Already Voted</small>");
+<% end %>
