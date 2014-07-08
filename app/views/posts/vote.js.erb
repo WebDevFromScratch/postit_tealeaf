@@ -1,0 +1,8 @@
+//alert("total votes for <%= @post.title %> is <%= @post.total_votes %>");
+<% if @vote.valid? %>
+  $('#post_<%= @post.id %>_votes').html('<%= @post.total_votes %>');
+  $('#post_<%= @post.id %>_msg').addClass("alert alert-success").html("<small>Vote Counted!</small>");
+<% else %>
+  //alert("You can only vote on that once");
+  $('#post_<%= @post.id %>_msg').addClass("alert alert-error").html("<small>Already Voted!</small>");
+<% end %>

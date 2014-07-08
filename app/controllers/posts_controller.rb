@@ -42,15 +42,19 @@ class PostsController < ApplicationController
     #@vote.user = current_user
     #@vote.voteable = @post
 
-    if !@vote.errors.any?
-      flash[:notice] = "Your vote was counted"
-    else
-      flash[:error] = "You can only vote on that once"
+    respond_to do |format| #this is AJAX
+      format.html do
+        if @vote.valid?
+          flash[:notice] = "Your vote was counted"
+        else
+          flash[:error] = "You can only vote on a post once"
+        end
+
+        redirect_to :back
+      end
+      format.js {} #nothing's here, default action in Rails is render
+                  # ---> thus this will try to render a vote.js.erb template
     end
-
-    redirect_to :back
-
-    #!!!note that there's a different flow here; study this in a spare while
   end
 
   private
