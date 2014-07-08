@@ -12,7 +12,8 @@ class Vote < ActiveRecord::Base
 
   def can_change_vote?
     if self.old_vote == to_boolean(self.new_vote)
-      errors.add(:base, "You only have one vote (up or down)")
+      errors.add(:base, "You only have one vote (up or down)") #this is not showing
+        #as of now; problems with re-rendering (some bugs happen)
     end
   end
 

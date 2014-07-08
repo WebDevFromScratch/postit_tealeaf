@@ -91,8 +91,4 @@ class PostsController < ApplicationController
   def set_post
     @post = Post.find(params[:id])
   end
-
-  def to_boolean(str)
-    str == "true"
-  end
 end
