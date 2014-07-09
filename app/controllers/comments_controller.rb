@@ -2,10 +2,10 @@ class CommentsController < ApplicationController
   before_action :require_user
 
   def create
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by(slug: params[:post_id])
     @comment = Comment.new(params.require(:comment).permit(:body))
     @comment.user = current_user
-    @comment.post_id = params[:post_id]
+    @comment.post_id = @post.id
 
     if @comment.save
       flash[:notice] = "Your comment was added!"
@@ -16,6 +16,9 @@ class CommentsController < ApplicationController
   end
 
   def vote
+    binding.pry
+    @post = Post.find_by(slug: params[:post_id])
+
     @comment = Comment.find(params[:id])
     @vote = Vote.create(voteable: @comment, user: current_user, vote: params[:vote])
 
