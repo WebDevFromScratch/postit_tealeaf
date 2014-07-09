@@ -1,16 +1,17 @@
 <div class="row">
   <div class="span2 well text-center">
     <% if logged_in? %>
-      <% if user_voted?(post) %>
-        <%= link_to vote_change_post_path(post, vote: true), method: 'patch' do %>
-          <i class="icon-heart"></i>
-        <% end %>        
-      <% else %>
-        <%= link_to vote_post_path(post, vote: true), method: 'post', remote: true do %>
-          <i class="icon-circle-arrow-up"></i>
+      <div id="vote_up_<%= post.id %>" class="no-space">
+        <% if user_voted?(post) %>
+          <%= link_to vote_change_post_path(post, vote: true), method: 'patch', remote: true do %>
+            <i class="icon-circle-arrow-up"></i>
+          <% end %>        
+        <% else %>
+          <%= link_to vote_post_path(post, vote: true), method: 'post', remote: true do %>
+            <i class="icon-circle-arrow-up"></i>
+          <% end %>
         <% end %>
-      <% end %>
-      <br/>
+      </div>
     <% end %>
     <span id="post_<%= post.id %>_votes"><%= post.total_votes %></span>
     <% if post.total_votes == 1 || post.total_votes == -1 %>
@@ -19,16 +20,25 @@
       votes
     <% end %>
     <% if logged_in? %>
-      <br/>
-      <% if user_voted?(post) %>
-        <%= link_to vote_change_post_path(post, vote: false), method: 'patch' do %>
-          <i class="icon-heart"></i>
+      <div id="vote_down_<%= post.id %>" class="no-space">
+        <% if user_voted?(post) %>
+          <%= link_to vote_change_post_path(post, vote: false), method: 'patch', remote: true do %>
+            <i class="icon-circle-arrow-down"></i>
+          <% end %>        
+        <% else %>
+          <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %>
+            <i class="icon-circle-arrow-down"></i>
+          <% end %>
         <% end %>
-      <% else %>
-        <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %>
-          <i class="icon-circle-arrow-down"></i>
+      </div>
+    <% end %>
+
+    <% if logged_in? %>
+      <small id="user_vote_<%= post.id %>">
+        <% if user_voted?(post) %>
+          Voted!
         <% end %>
-      <% end %>
+      </small>
     <% end %>
     <br/>
     <br/>

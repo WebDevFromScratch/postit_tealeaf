@@ -63,23 +63,22 @@ class PostsController < ApplicationController
     @vote.old_vote = @vote[:vote]
     @vote.new_vote = params[:vote]
 
-    if @vote.valid?
-      @vote.update(vote: params[:vote])
-      flash[:notice] = "Your vote was changed"
-      redirect_to :back
-    else
-      flash[:error] = "You only have one vote (up or down)"
-      redirect_to :back
+    respond_to do |format|
+      format.html do
+        if @vote.valid?
+          @vote.update(vote: params[:vote])
+          flash[:notice] = "Your vote was changed"
+        else
+          flash[:error] = "You only have one vote (up or down)"
+        end
+        redirect_to :back
+      end
+      format.js do
+        if @vote.valid?
+          @vote.update(vote: params[:vote])
+        end
+      end
     end
-
-    #if @vote[:vote] == to_boolean(params[:vote])
-    #  flash[:error] = "You only have one vote (up or down)"
-    #  redirect_to :back
-    #else
-    #  @vote.update(vote: params[:vote])
-    #  flash[:notice] = "Your vote was changed"
-    #  redirect_to :back
-    #end
   end
 
   private

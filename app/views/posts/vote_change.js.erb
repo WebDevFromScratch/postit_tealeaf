@@ -1,0 +1,6 @@
+<% if @vote.valid? %>
+  $('#post_<%= @post.id %>_votes').html('<%= @post.total_votes %>');
+  $('#post_<%= @post.id %>_msg').removeClass("alert-error").addClass("alert alert-success").html("<small>Vote Changed!</small>");
+<% else %>
+  $('#post_<%= @post.id %>_msg').removeClass("alert-success").addClass("alert alert-error").html("<small>Already Voted</small>");
+<% end %>

@@ -2,6 +2,9 @@
 <% if @vote.valid? %>
   $('#post_<%= @post.id %>_votes').html('<%= @post.total_votes %>');
   $('#post_<%= @post.id %>_msg').addClass("alert alert-success").html("<small>Vote Counted!</small>");
+  $('#vote_up_<%= @post.id %>').replaceWith( '<div><%= link_to vote_change_post_path(@post, vote: true), method: 'patch', remote: true do %><i class="icon-circle-arrow-up"></i><% end %></div>');
+  $('#vote_down_<%= @post.id %>').replaceWith( '<div><%= link_to vote_change_post_path(@post, vote: false), method: 'patch', remote: true do %><i class="icon-circle-arrow-down"></i><% end %></div>');
+  $('#user_vote_<%= @post.id %>').html('Voted!')
 <% else %>
   //alert("You can only vote on that once");
   $('#post_<%= @post.id %>_msg').addClass("alert alert-error").html("<small>Already Voted</small>");
