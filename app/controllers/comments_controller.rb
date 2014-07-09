@@ -32,4 +32,30 @@ class CommentsController < ApplicationController
       format.js { render "posts/comment_vote" }
     end
   end
+
+  def vote_change
+    @comments = Comment.all
+    @comment = Comment.find(params[:id])
+    @vote = @comment.votes.find_by user_id: current_user.id
+    @vote.old_vote = @vote[:vote]
+    @vote.new_vote = params[:vote]
+
+    respond_to do |format|
+      format.html do
+        if @vote.valid?
+          @vote.update(vote: params[:vote])
+          flash[:notice] = "Your vote was changed"
+        else
+          flash[:error] = "You only have one vote (up or down)"
+        end
+        redirect_to :back
+      end
+      format.js do
+        if @vote.valid?
+          @vote.update(vote: params[:vote])
+        end
+        render "posts/comment_vote_change"
+      end
+    end
+  end
 end

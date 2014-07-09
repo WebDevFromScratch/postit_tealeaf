@@ -1,7 +1,7 @@
 <div class="row">
   <div class="span2 well text-center">
     <% if logged_in? %>
-      <div id="vote_up_<%= post.id %>" class="no-space">
+      <div id="vote_up_<%= post.id %>">
         <% if user_voted?(post) %>
           <%= link_to vote_change_post_path(post, vote: true), method: 'patch', remote: true do %>
             <i class="icon-circle-arrow-up"></i>
@@ -20,7 +20,7 @@
       votes
     <% end %>
     <% if logged_in? %>
-      <div id="vote_down_<%= post.id %>" class="no-space">
+      <div id="vote_down_<%= post.id %>">
         <% if user_voted?(post) %>
           <%= link_to vote_change_post_path(post, vote: false), method: 'patch', remote: true do %>
             <i class="icon-circle-arrow-down"></i>

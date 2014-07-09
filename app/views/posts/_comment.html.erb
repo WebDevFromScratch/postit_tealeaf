@@ -1,12 +1,19 @@
 <% show_comment_post ||= false %> <!-- this sets this var as a default to false (if no value is passed to it) -->
 
 <div class="row">
-  <div class="well span2 text-center">
+  <div class="span2 well text-center">
     <% if logged_in? %>
-      <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: 'post', remote: true do %>
-        <i class="icon-circle-arrow-up"></i>
-      <% end %>
-      <br/>
+      <div id="vote_up_<%= comment.id %>">
+        <% if user_voted?(comment) %>
+          <%= link_to vote_change_post_comment_path(comment.post, comment, vote: true), method: 'patch', remote: true do %>
+            <i class="icon-circle-arrow-up"></i>
+          <% end %>        
+        <% else %>
+          <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: 'post', remote: true do %>
+            <i class="icon-circle-arrow-up"></i>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
     <span id="comment_<%= comment.id %>_votes"><%= comment.total_votes %></span>
     <% if comment.total_votes == 1 || comment.total_votes == -1 %>
@@ -15,15 +22,32 @@
       votes
     <% end %>
     <% if logged_in? %>
-      <br/>
-      <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: 'post', remote: true do %>
-        <i class="icon-circle-arrow-down"></i>
-      <% end %>
+      <div id="vote_down_<%= comment.id %>">
+        <% if user_voted?(comment) %>
+          <%= link_to vote_change_post_comment_path(comment.post, comment, vote: false), method: 'patch', remote: true do %>
+            <i class="icon-circle-arrow-down"></i>
+          <% end %>        
+        <% else %>
+          <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: 'post', remote: true do %>
+            <i class="icon-circle-arrow-down"></i>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if logged_in? %>
+      <small id="user_vote_<%= comment.id %>">
+        <% if user_voted?(comment) %>
+          Voted!
+        <% end %>
+      </small>
     <% end %>
     <br/>
     <br/>
     <span id="comment_<%= comment.id %>_msg"></span>
   </div>
+
+
   <div class="well span8">
     <p>
       <%= comment.body %> <span class="quiet">
