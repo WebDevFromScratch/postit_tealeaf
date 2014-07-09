@@ -18,6 +18,10 @@
       <%= label_tag :confirm_password %>
       <%= password_field_tag :confirm_password %>
     </div>
-    <%= f.submit 'Update', class: 'btn btn-primary' %>
+    <% if @user.new_record? %>
+      <%= f.submit 'Register', class: 'btn btn-primary' %>
+    <% else %>
+      <%= f.submit 'Update', class: 'btn btn-primary' %>
+    <% end %>
   <% end %>
 </div>
