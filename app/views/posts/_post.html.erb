@@ -49,7 +49,7 @@
     <h4><%= link_to post.title, post_path(post) %></h4>
     <p><%= post.description %></p>
     <p>
-      <span class="quiet">posted by </span><%= link_to post.user.username, user_path(post.user.id) %>
+      <span class="quiet">posted by </span><%= link_to post.user.username, user_path(post.user) %>
       <small>at <%= pretty_date_time(post.created_at) %></small> <!-- post.created_at -->
     </p>
     <small>
