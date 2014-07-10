@@ -19,9 +19,12 @@
 
 <h4>Comments:</h4>
 
-<% @post.comments.each do |comment| %>
-  <%= render 'comment', comment: comment %>
+<% @post.reload.comments.each do |comment| %>
+  <%= render 'posts/comment', comment: comment %>
 <% end %>
+
+<!-- .reload method fixes the bug when our comment fails validation (comment is saved in memory and associated to the @post object and our code tries to render a view for it but can't) - .reload just uses the data from our database and updates (re-freshes) it as @post.comments (without this last comment, that was saved in memory) -->
+<!-- I actually don't need that here, since I used .new method in my comments#create action, instead of .create (or .build), so this is actually not saved. This would be needed if using the syntax from solutions -->
 
 <hr/>
 

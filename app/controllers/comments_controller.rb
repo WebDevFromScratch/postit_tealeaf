@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find_by(slug: params[:post_id])
     @comment = Comment.new(params.require(:comment).permit(:body))
+    #@comment = @post.comments.create(params.require(:comment).permit(:body))
     @comment.user = current_user
     @comment.post_id = @post.id
 
@@ -15,8 +16,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def vote
-    binding.pry
+  def votes
     @post = Post.find_by(slug: params[:post_id])
 
     @comment = Comment.find(params[:id])
