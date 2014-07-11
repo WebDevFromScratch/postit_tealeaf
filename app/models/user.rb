@@ -1,9 +1,5 @@
-require 'bcrypt' #try to remove these bcrypt things later and see if it works
-
 class User < ActiveRecord::Base
-  include BCrypt
-
-  before_save :generate_slug
+  include Sluggable
 
   attr_accessor :old_password, :confirm_password
 
@@ -48,13 +44,5 @@ class User < ActiveRecord::Base
         errors.add(:base, "Confirm password and password fields must match")
       end
     end
-  end
-
-  def generate_slug
-    self.slug = self.username.downcase.gsub(' ', '-').gsub(/[.,!?]/, '')
-  end
-
-  def to_param
-    self.slug
   end
 end
