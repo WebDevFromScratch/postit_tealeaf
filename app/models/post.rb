@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  include Reusable #this module is in /lib folder
+  include Voteable #this module is in /lib folder
 
   before_create :generate_slug
 

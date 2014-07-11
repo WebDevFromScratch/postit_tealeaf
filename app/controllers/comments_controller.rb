@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def votes
+  def vote
     @post = Post.find_by(slug: params[:post_id])
 
     @comment = Comment.find(params[:id])

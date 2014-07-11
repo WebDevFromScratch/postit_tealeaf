@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  include Reusable #this module is in /lib folder
+  include Voteable #this module is in /lib folder
 
   belongs_to :user
   belongs_to :post
