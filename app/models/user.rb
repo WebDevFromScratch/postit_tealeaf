@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 8 }, on: :create
-
   validate :current_password_errors, on: :update
   validates :password, presence: true, length: { minimum: 8 }, on: :update,
             if: :current_password_match?
-
   validate :password_confirmation
+
+  sluggable_column :username
 
   def current_password
     BCrypt::Password.new(User.find(self.id).password_digest)
