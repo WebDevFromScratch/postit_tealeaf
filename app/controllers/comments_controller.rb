@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
   before_action :require_user
+  before_action :set_post, only: [:create, :vote]
+  before_action :set_comment, only: [:vote, :vote_change]
 
   def create
-    @post = Post.find_by(slug: params[:post_id])
     @comment = Comment.new(params.require(:comment).permit(:body))
     #@comment = @post.comments.create(params.require(:comment).permit(:body))
     @comment.user = current_user
@@ -17,9 +18,6 @@ class CommentsController < ApplicationController
   end
 
   def vote
-    @post = Post.find_by(slug: params[:post_id])
-
-    @comment = Comment.find(params[:id])
     @vote = Vote.create(voteable: @comment, user: current_user, vote: params[:vote])
 
     respond_to do |format|
@@ -29,7 +27,6 @@ class CommentsController < ApplicationController
         else
           flash[:error] = "You can only vote on that once"
         end
-
         redirect_to :back
       end
       format.js { render "posts/comment_vote" }
@@ -37,8 +34,6 @@ class CommentsController < ApplicationController
   end
 
   def vote_change
-    @comments = Comment.all
-    @comment = Comment.find(params[:id])
     @vote = @comment.votes.find_by user_id: current_user.id
     @vote.old_vote = @vote[:vote]
     @vote.new_vote = params[:vote]
@@ -60,5 +55,13 @@ class CommentsController < ApplicationController
         render "posts/comment_vote_change"
       end
     end
+  end
+
+  def set_post
+    @post = Post.find_by(slug: params[:post_id])
+  end
+
+  def set_comment
+    @comment = Comment.find(params[:id])
   end
 end

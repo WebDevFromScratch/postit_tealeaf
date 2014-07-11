@@ -59,7 +59,6 @@ class PostsController < ApplicationController
   end
 
   def vote_change
-    @posts = Post.all
     @vote = @post.votes.find_by user_id: current_user.id
     @vote.old_vote = @vote[:vote]
     @vote.new_vote = params[:vote]

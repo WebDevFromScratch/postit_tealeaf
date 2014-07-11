@@ -13,8 +13,6 @@ class Post < ActiveRecord::Base
   validates :description, presence: true
   validates :url, presence: true, uniqueness: true
 
-  
-
   def generate_slug
     self.slug = self.title.downcase.gsub(' ', '-').gsub(/[.,!?]/, '')
   end
