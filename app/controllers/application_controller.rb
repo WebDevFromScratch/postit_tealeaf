@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?, :user_voted?
+  helper_method :current_user, :logged_in?, :user_voted?, :require_creator
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -29,5 +29,13 @@ class ApplicationController < ActionController::Base
 
   def user_voted?(obj)
     obj.votes.any? { |vote| vote[:user_id] == current_user.id }
+  end
+
+  def require_creator
+    @post = Post.find_by(slug: params[:id])
+    unless current_user == @post.user
+      flash[:error] = "You can only edit your own posts!"
+      redirect_to root_path #maybe change to :back?
+    end
   end
 end
