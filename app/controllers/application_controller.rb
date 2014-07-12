@@ -32,25 +32,8 @@ class ApplicationController < ActionController::Base
     obj.votes.any? { |vote| vote[:user_id] == current_user.id }
   end
 
-  def user_is_creator?
-    @post = Post.find_by(slug: params[:id])
-    current_user == @post.user
-  end
-
-  def require_creator
-    access_denied unless logged_in? && user_is_creator?
-  end
-
-  def require_admin
-    access_denied unless logged_in? && current_user.is_admin?
-  end
-
-  def require_creator_or_admin
-    access_denied unless logged_in? && (user_is_creator? || current_user.is_admin?)
-  end
-
   def access_denied
     flash[:error] = "You are not allowed to do that!"
-    redirect_to :back
+    redirect_to root_path
   end
 end
