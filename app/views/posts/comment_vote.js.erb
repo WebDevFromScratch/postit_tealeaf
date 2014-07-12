@@ -4,9 +4,7 @@
 
   $('#vote_up_<%= @comment.id %>').replaceWith( '<div><%= link_to vote_change_post_comment_path(@comment.post, @comment, vote: true), method: 'patch', remote: true do %><i class="icon-circle-arrow-up"></i><% end %></div>');
   $('#vote_down_<%= @comment.id %>').replaceWith( '<div><%= link_to vote_change_post_comment_path(@comment.post, @comment, vote: false), method: 'patch', remote: true do %><i class="icon-circle-arrow-down"></i><% end %></div>');
-  $('#user_vote_<%= @comment.id %>').html('Voted!')
-
-
+  $('#user_vote_<%= @comment.id %>').html('<small>your vote: <%= @comment.votes.find_by(user_id: current_user.id).vote %></small>')
 <% else %>
   $('#comment_<%= @comment.id %>_msg').addClass("alert alert-error").html("<small>Already Voted</small>");
 <% end %>
