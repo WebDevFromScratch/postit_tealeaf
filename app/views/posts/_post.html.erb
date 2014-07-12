@@ -36,7 +36,7 @@
     <% if logged_in? %>
       <div class="well well-small" id="user_vote_<%= post.id %>">
         <% if user_voted?(post) %>
-          <small>your vote: <%= post.votes.find_by(user_id: current_user.id).vote %></small>
+          <small>your vote: <%= vote_for_show(post) %></small>
         <% else %>
           <small>your vote: none</small>
         <% end %>

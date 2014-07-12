@@ -44,9 +44,9 @@ class UsersController < ApplicationController
   end
 
   #this is not working as of yet! (no template for all users)
-  def index
-    @users = User.all
-  end
+  #def index
+  #  @users = User.all
+  #end
 
   def show
 

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user, :logged_in?, :user_voted?, :require_creator,
-                :require_admin
+                :require_admin, :vote_for_show
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -35,5 +35,21 @@ class ApplicationController < ActionController::Base
   def access_denied
     flash[:error] = "You are not allowed to do that!"
     redirect_to root_path
+  end
+
+  def vote_for_show(obj)
+    vote = obj.votes.find_by(user_id: current_user.id).vote
+    if vote == true
+      vote_print = "up!"
+    elsif vote == false
+      vote_print = "down!"
+    else
+      vote_print = "none"
+    end
+    vote_print
+  end
+
+  def vote_for_js
+
   end
 end

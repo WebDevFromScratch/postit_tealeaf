@@ -1,7 +1,7 @@
 <% if @vote.valid? %>
   $('#post_<%= @post.id %>_votes').html('<%= @post.total_votes %>');
   $('#post_<%= @post.id %>_msg').removeClass("alert-error").addClass("alert alert-success").html("<small>Vote Changed!</small>");
-  $('#user_vote_<%= @post.id %>').html('<small>your vote: <%= @post.votes.find_by(user_id: current_user.id).vote %></small>')
+  $('#user_vote_<%= @post.id %>').html('<small>your vote: <%= vote_for_show(@post) %></small>')
 <% else %>
   $('#post_<%= @post.id %>_msg').removeClass("alert-success").addClass("alert alert-error").html("<small>Already Voted</small>");
 <% end %>

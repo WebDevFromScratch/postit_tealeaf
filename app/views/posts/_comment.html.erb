@@ -37,7 +37,7 @@
     <% if logged_in? %>
       <div class="well well-small" id="user_vote_<%= comment.id %>">
         <% if user_voted?(comment) %>
-          <small>your vote: <%= comment.votes.find_by(user_id: current_user.id).vote %></small>
+          <small>your vote: <%= vote_for_show(comment) %></small>
         <% else %>
           <small>your vote: none</small>
         <% end %>
