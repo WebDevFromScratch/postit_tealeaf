@@ -34,14 +34,14 @@
     <% end %>
 
     <% if logged_in? %>
-      <small id="user_vote_<%= post.id %>">
+      <div class="well well-small" id="user_vote_<%= post.id %>">
         <% if user_voted?(post) %>
-          Voted!
+          <small>your vote: <%= post.votes.find_by(user_id: current_user.id).vote %></small>
+        <% else %>
+          <small>your vote: none</small>
         <% end %>
-      </small>
+      </div>
     <% end %>
-    <br/>
-    <br/>
     <span id="post_<%= post.id %>_msg"></span>
   </div>
   <div class="span8 well">
