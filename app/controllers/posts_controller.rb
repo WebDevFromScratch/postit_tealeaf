@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :vote, :vote_change]
   before_action :require_user, except: [:index, :show]
-  before_action :require_creator, only: [:edit]
+  before_action :require_creator_or_admin, only: [:edit ,:update]
 
   def index
     @posts = Post.all
@@ -27,7 +27,8 @@ class PostsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @post.update(post_params)

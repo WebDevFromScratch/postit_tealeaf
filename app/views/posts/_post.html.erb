@@ -55,7 +55,7 @@
     <small>
       <span>
         <%= link_to("#{post.comments.size} comments", post_path(post)) %>
-        <% if logged_in? && post.user == current_user %>
+        <% if logged_in? && (post.user == current_user || current_user.is_admin?) %>
           <%= link_to("Edit", edit_post_path(post), class: "right") %>
         <% end %>
       </span>

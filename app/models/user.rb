@@ -45,4 +45,8 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  def is_admin?
+    self.role.to_s == 'admin'
+  end
 end

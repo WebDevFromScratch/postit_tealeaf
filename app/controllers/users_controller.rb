@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :set_password_confirmation, only: [:update]
   before_action :require_same_user, only: [:edit, :update] #this prevents from
     #editing another user's profile when logged in as different user
-
   before_action :require_no_user, only: [:new, :create]
   before_action :require_user, only: [:edit]
 
