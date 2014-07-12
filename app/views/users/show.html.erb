@@ -3,8 +3,12 @@
 <%= render 'shared/content_title', title: "#{username}'s Profile" %>
 
 <div class='well'>
-  <p><strong>Username:</strong> <%= username %><br/>
-  <strong>Timezone:</strong> TO DO</p>
+  <dl class='dl-horizontal'>
+    <dt>Username:</dt>
+    <dd><%= username %></dd>
+    <dt>Timezone:</dt>
+    <dd><%= @user.timezone %></dd>
+  </dl>
 </div>
 
 <h5><%= username %>'s Activity:</h5>
