@@ -101,10 +101,6 @@ class PostsController < ApplicationController
     access_denied unless logged_in? && user_is_creator?
   end
 
-  def require_admin
-    access_denied unless logged_in? && current_user.is_admin?
-  end
-
   def require_creator_or_admin
     access_denied unless logged_in? && (user_is_creator? || current_user.is_admin?)
   end

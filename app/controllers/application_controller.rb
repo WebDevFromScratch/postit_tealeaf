@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?, :user_voted?, :require_creator,
-                :require_admin, :vote_for_show
+  helper_method :current_user, :logged_in?, :user_voted?, :require_admin, :vote_for_show
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -12,6 +11,14 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     !!current_user
+  end
+
+  def is_admin?
+    current_user.role == 'admin'
+  end
+
+  def require_admin
+    access_denied unless logged_in? && current_user.is_admin?
   end
 
   def require_user
@@ -47,9 +54,5 @@ class ApplicationController < ActionController::Base
       vote_print = "none"
     end
     vote_print
-  end
-
-  def vote_for_js
-
   end
 end
